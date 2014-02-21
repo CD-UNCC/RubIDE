@@ -1,0 +1,13 @@
+F:\Code\Projects\RubIDE\RubyIDE\bin\Debug\RubyIDE.exe.config
+F:\Code\Projects\RubIDE\RubyIDE\bin\Debug\RubyIDE.exe
+F:\Code\Projects\RubIDE\RubyIDE\bin\Debug\RubyIDE.pdb
+F:\Code\Projects\RubIDE\RubyIDE\obj\Debug\RubIDE.csprojResolveAssemblyReference.cache
+F:\Code\Projects\RubIDE\RubyIDE\obj\Debug\MainWindow.baml
+F:\Code\Projects\RubIDE\RubyIDE\obj\Debug\MainWindow.g.cs
+F:\Code\Projects\RubIDE\RubyIDE\obj\Debug\App.g.cs
+F:\Code\Projects\RubIDE\RubyIDE\obj\Debug\RubyIDE_MarkupCompile.cache
+F:\Code\Projects\RubIDE\RubyIDE\obj\Debug\RubyIDE.g.resources
+F:\Code\Projects\RubIDE\RubyIDE\obj\Debug\RubyIDE.Properties.Resources.resources
+F:\Code\Projects\RubIDE\RubyIDE\obj\Debug\RubIDE.csproj.GenerateResource.Cache
+F:\Code\Projects\RubIDE\RubyIDE\obj\Debug\RubyIDE.exe
+F:\Code\Projects\RubIDE\RubyIDE\obj\Debug\RubyIDE.pdb

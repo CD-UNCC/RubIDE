@@ -1,11 +1,13 @@
-import rubide.RubideFile;
+import rubide.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,11 +33,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         HBox layout = new HBox();
         
-        final TextArea txt = new TextArea();
+        Button save = new Button("Save");
+        
+        
+        final FileController txt = new FileController();
         txt.setWrapText(false);
         txt.setText("Yo\ntest");
         
-        layout.getChildren().add(txt);
+        layout.getChildren().addAll(txt, save);
       
         Scene scene = new Scene(layout, 551, 400);
         
@@ -51,6 +56,13 @@ public class Main extends Application {
             }
         });
         
+        save.setOnAction(new EventHandler<ActionEvent>() {
+         @Override
+            public void handle(ActionEvent e) {
+               txt.saveFile();
+            }
+        });
+        
         // Dropping over surface
         scene.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
@@ -63,7 +75,7 @@ public class Main extends Application {
                     String fileName = null;
                     for (File file:db.getFiles()) {
                         RubideFile f = new RubideFile(file);
-                        txt.setText(f.read());
+                        txt.setFile(f);
                     }
                 }
                 event.setDropCompleted(success);

@@ -1,6 +1,7 @@
 package rubide;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 import java.util.regex.*;
 import java.util.Scanner;
@@ -37,6 +38,18 @@ public class RubideFile {
       catch (FileNotFoundException e) { result = "File could not be read"; }
       return result;
    }
+   
+   public void save(String[] lines) {
+      try {
+         PrintWriter output = new PrintWriter(getAbsolutePath());
+         for (String line : lines)
+            output.println(line);
+         output.close();
+      }
+      catch (FileNotFoundException e) { System.out.println("Could not write"); }
+   }
+   
+   public void save(String txt) { save(txt.split("\\\n")); }
    
    public String getFileName() { return fileName; }
    public String getFileExtension() { return fileExt; }

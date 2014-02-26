@@ -38,23 +38,10 @@ public class Main extends Application {
         
         final FileController txt = new FileController();
         txt.setWrapText(false);
-        txt.setText("Yo\ntest");
         
         layout.getChildren().addAll(txt, save);
       
         Scene scene = new Scene(layout, 551, 400);
-        
-        scene.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                Dragboard db = event.getDragboard();
-                if (db.hasFiles()) {
-                    event.acceptTransferModes(TransferMode.COPY);
-                } else {
-                    event.consume();
-                }
-            }
-        });
         
         save.setOnAction(new EventHandler<ActionEvent>() {
          @Override
@@ -64,25 +51,6 @@ public class Main extends Application {
         });
         
         // Dropping over surface
-        scene.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                Dragboard db = event.getDragboard();
-                boolean success = false;
-                if (db.hasFiles()) {
-                    success = true;
-                    String filePath = null;
-                    String fileName = null;
-                    for (File file:db.getFiles()) {
-                        RubideFile f = new RubideFile(file);
-                        txt.setFile(f);
-                    }
-                }
-                event.setDropCompleted(success);
-                event.consume();
-            }
-        });
-
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -15,6 +15,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
@@ -33,13 +34,20 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         HBox layout = new HBox();
         
+        VBox buttons = new VBox();
+        
+        
+        
         Button save = new Button("Save");
+        Button open = new Button("Open");
+        
+        buttons.getChildren().addAll(save, open);
         
         
         final FileController txt = new FileController();
         txt.setWrapText(false);
         
-        layout.getChildren().addAll(txt, save);
+        layout.getChildren().addAll(txt, buttons);
       
         Scene scene = new Scene(layout, 551, 400);
         
@@ -47,6 +55,13 @@ public class Main extends Application {
          @Override
             public void handle(ActionEvent e) {
                txt.saveFile();
+            }
+        });
+        
+        open.setOnAction(new EventHandler<ActionEvent>() {
+         @Override
+            public void handle(ActionEvent e) {
+               txt.openFiles();
             }
         });
         

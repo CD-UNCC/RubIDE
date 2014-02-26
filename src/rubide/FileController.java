@@ -7,6 +7,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.stage.FileChooser;
 import java.util.ArrayList;
 
 public class FileController extends TextArea {
@@ -35,8 +36,7 @@ public class FileController extends TextArea {
                     String filePath = null;
                     String fileName = null;
                     for (File file:db.getFiles()) {
-                        RubideFile f = new RubideFile(file);
-                        setFile(f);
+                        setFile(file);
                     }
                 }
                 event.setDropCompleted(success);
@@ -45,9 +45,18 @@ public class FileController extends TextArea {
         });
    }
    
-   public void setFile(RubideFile f) { 
-      currentFile = f; 
-      setText(f.read());
+   public void openFiles() {
+      // TODO: add support for multiple files
+      FileChooser chooser = new FileChooser();
+      
+      File file = chooser.showOpenDialog(getScene().getWindow());
+      if (file != null)
+         setFile(file);
+   }
+   
+   public void setFile(File f) { 
+      currentFile = new RubideFile(f); 
+      setText(currentFile.read());
    }
    public void saveFile() { currentFile.save(getText()); }
 }

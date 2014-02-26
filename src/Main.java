@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -28,8 +29,16 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Group root = new Group();
-        Scene scene = new Scene(root, 551, 400);
+        HBox layout = new HBox();
+        
+        final TextArea txt = new TextArea();
+        txt.setWrapText(false);
+        txt.setText("Yo\ntest");
+        
+        layout.getChildren().add(txt);
+      
+        Scene scene = new Scene(layout, 551, 400);
+        
         scene.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
@@ -54,7 +63,7 @@ public class Main extends Application {
                     String fileName = null;
                     for (File file:db.getFiles()) {
                         RubideFile f = new RubideFile(file);
-                        System.out.println(f);
+                        txt.setText(f.read());
                     }
                 }
                 event.setDropCompleted(success);

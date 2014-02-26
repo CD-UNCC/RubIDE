@@ -1,7 +1,9 @@
 package rubide;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.regex.*;
+import java.util.Scanner;
 import java.lang.IllegalStateException;
 
 public class RubideFile {
@@ -27,6 +29,13 @@ public class RubideFile {
          fileName = "";
          fileExt = "";
       }
+   }
+   
+   public String read() { 
+      String result;
+      try { result = new Scanner(orig).useDelimiter("\\Z").next(); }
+      catch (FileNotFoundException e) { result = "File could not be read"; }
+      return result;
    }
    
    public String getFileName() { return fileName; }

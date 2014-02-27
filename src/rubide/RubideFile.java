@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 import java.util.regex.*;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.lang.IllegalStateException;
 
 public class RubideFile {
    static String patternStr = "(.*)\\.(.+)";
@@ -35,7 +35,7 @@ public class RubideFile {
    public String read() { 
       String result;
       try { result = new Scanner(orig).useDelimiter("\\Z").next(); }
-      catch (FileNotFoundException e) { result = "File could not be read"; }
+      catch (FileNotFoundException | NoSuchElementException e) { result = "File could not be read (" + fileName + ")"; }
       return result;
    }
    

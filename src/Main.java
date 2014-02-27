@@ -1,28 +1,16 @@
 import rubide.*;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
-import javafx.scene.Group;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.ArcBuilder;
-import javafx.scene.shape.ArcType;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.RectangleBuilder;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -44,25 +32,40 @@ public class Main extends Application {
         buttons.getChildren().addAll(save, open);
         
         
-        final FileController txt = new FileController();
-        txt.setWrapText(false);
+        final FileController fileControl = new FileController();
+        fileControl.setWrapText(false);
         
-        layout.getChildren().addAll(txt, buttons);
+        final TabPane tabs = new TabPane();
+        tabs.setSide(Side.LEFT);
+        
+        layout.getChildren().addAll(tabs, fileControl, buttons);
       
         Scene scene = new Scene(layout, 551, 400);
         
         save.setOnAction(new EventHandler<ActionEvent>() {
          @Override
             public void handle(ActionEvent e) {
-               txt.saveFile();
+        	 	fileControl.saveFile();
             }
         });
         
         open.setOnAction(new EventHandler<ActionEvent>() {
-         @Override
+        	@Override
             public void handle(ActionEvent e) {
-               txt.openFiles();
+               int[] fileData = fileControl.openFiles();
+               for (int i = fileData[1]; i < fileData[1] + fileData[0]; i++)
+               {
+            	   Tab newTab = new Tab();
+            	   newTab.setText(fileControl.getFile(i).getFileName());
+            	   tabs.getTabs().add(newTab);
+               }
             }
+        });
+        
+        tabs.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+        	public void changed(ObservableValue<? extends Number> ov, Number old, Number cur) {
+        		fileControl.setFile(cur.intValue());
+        	}
         });
         
         // Dropping over surface

@@ -11,10 +11,10 @@ public class RubideFile {
    static String patternStr = "(.*)\\.(.+)";
    static Pattern namePattern = Pattern.compile(patternStr);
    
-
    File orig;
    String fileName;
    String fileExt;
+   boolean newFile = false;
    
    public RubideFile(File orig) {
       this.orig = orig;
@@ -32,6 +32,10 @@ public class RubideFile {
       }
    }
    
+   public RubideFile() {
+	   newFile = true;
+   }
+   
    public String read() { 
       String result;
       try { result = new Scanner(orig).useDelimiter("\\Z").next(); }
@@ -39,7 +43,7 @@ public class RubideFile {
       return result;
    }
    
-   public void save(String[] lines) {
+   public void save(String[] lines) {	   
       try {
          PrintWriter output = new PrintWriter(getAbsolutePath());
          for (String line : lines)
@@ -54,6 +58,7 @@ public class RubideFile {
    public String getFileName() { return fileName; }
    public String getFileExtension() { return fileExt; }
    public String getAbsolutePath() { return orig.getAbsolutePath(); }
+   public boolean isNewFile() { return newFile; }
    
    public String toString() { return fileName + " (" + fileExt + ") [" + getAbsolutePath() + "]"; } 
       

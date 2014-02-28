@@ -3,7 +3,11 @@ package rubide;
 import java.io.File;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -12,10 +16,14 @@ import javafx.stage.FileChooser;
 
 public class FileTabPane extends TabPane {
 	
-	static FileChooser CHOOSER = new FileChooser();
+	public static FileChooser CHOOSER = new FileChooser();
 	
 	public FileTabPane() {
 		super();
+		
+		getTabs().add(new FileTab());
+		
+		// Set Events
 		
 		setOnDragOver(new EventHandler<DragEvent>() {
             @Override
@@ -35,13 +43,30 @@ public class FileTabPane extends TabPane {
                 boolean success = false;
                 if (db.hasFiles()) {
                     success = true;
-                    for (File f : db.getFiles())
-                        open(f);
+                    openFiles(db.getFiles());
                 }
                 e.setDropCompleted(success);
                 e.consume();
             }
         });
+		
+		getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+			public void changed(ObservableValue<? extends Tab> ov, Tab newTab, Tab oldTab) {
+				if (getTabs().size() == 0)
+					getTabs().add(new FileTab());
+				if (getTabs().size() > 1) {
+					FileTab firstTab = (FileTab) getTabs().get(0);
+					if (firstTab.getFile().isNewFile())
+						close(firstTab);
+				}
+			}
+		});
+	}
+	
+	public void tabClosed() {
+		if (getTabs().size() == 0) {
+			getTabs().add(new FileTab());
+		}
 	}
 	
 	public void open(File f) {
@@ -50,12 +75,23 @@ public class FileTabPane extends TabPane {
 	}
 	
 	public void openFiles() {
-		List<File> files = CHOOSER.showOpenMultipleDialog(getScene().getWindow());
-		 
+		openFiles(CHOOSER.showOpenMultipleDialog(getScene().getWindow()));
+	}
+	
+	public void openFiles(List<File> files) {		 
 		for (File f : files)
 			open(f);
 		 
 		getSelectionModel().selectLast();
+	}
+	
+	public void close(Tab t) {
+		EventHandler<Event> e = t.getOnClosed();
+		if (e != null)
+			e.handle(null);
+		System.out.println(getTabs().size());
+		System.out.println(getTabs().remove(t));
+		System.out.println(getTabs().size());
 	}
 	
 	public void save() {

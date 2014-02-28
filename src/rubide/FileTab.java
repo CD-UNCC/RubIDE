@@ -40,7 +40,8 @@ public class FileTab extends Tab {
 		}
 		
 		heldFile.save(ta.getText());
-	}
+	}	
 	
+	public boolean isEmpty() { return heldFile.isNewFile() && ((TextArea) getContent()).getText().length() == 0; }
 	public RubideFile getFile() { return heldFile; }
 }

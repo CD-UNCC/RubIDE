@@ -27,7 +27,6 @@ public class Main extends Application {
         buttons.getChildren().addAll(save, open);
         
         final FileTabPane files = new FileTabPane();
-        files.setSide(Side.LEFT);
         
         layout.getChildren().addAll(files, buttons);
       

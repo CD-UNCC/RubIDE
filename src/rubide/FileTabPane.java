@@ -36,7 +36,7 @@ public class FileTabPane extends TabPane {
 		addTab.setText("+");
 		// addTab.setTooltip();
 		
-		getTabs().add(addTab);
+		addTab(addTab);
 		
 		// Set Events
 		
@@ -68,8 +68,8 @@ public class FileTabPane extends TabPane {
 		getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
 			public void changed(ObservableValue<? extends Tab> ov, Tab oldTab, Tab newTab) {
 				if (newTab == addTab) {
-					getTabs().add(getTabs().size() - 1, new FileTab());
-					getSelectionModel().select(getTabs().size() - 2);
+					addTab(new FileTab());
+					selectLastTab();
 				}
 			}
 		});
@@ -77,11 +77,7 @@ public class FileTabPane extends TabPane {
 	
 	public void open(File f) {				
 		FileTab t = new FileTab(f);
-		getTabs().add(getTabs().size() - 1, t);
-	}
-	
-	public void openFiles() {
-		openFiles(CHOOSER.showOpenMultipleDialog(getScene().getWindow()));
+		addTab(t);
 	}
 	
 	public void openFiles(List<File> files) {
@@ -89,12 +85,15 @@ public class FileTabPane extends TabPane {
 			for (File f : files)
 				open(f);
 			
-			FileTab selected = (FileTab) getSelectionModel().getSelectedItem();
-			if (selected.isEmpty())
-				close(selected);
+			if (selectedTab().isEmpty())
+				close(selectedTab());
 			 
-			getSelectionModel().select(getTabs().size() - 2);
+			selectLastTab();
 		}
+	}
+	
+	public void openFiles() {
+		openFiles(CHOOSER.showOpenMultipleDialog(getScene().getWindow()));
 	}
 	
 	public void close(Tab t) {
@@ -103,12 +102,19 @@ public class FileTabPane extends TabPane {
 			e.handle(null);
 		getTabs().remove(t);
 		
-		if (getTabs().size() == 1)
-			getTabs().add(new FileTab());
+		if (tabCount() == 1)
+			addTab(new FileTab());
 	}
 	
 	public void save() {
-		FileTab ft = (FileTab) getSelectionModel().selectedItemProperty().get();
-		ft.save();
+		selectedTab().save();
 	}
+	
+	public void addTab(Tab t) { getTabs().add(tabCount() - 1, t); }
+	public void addTab(int index, Tab t) { getTabs().add(index, t); }	
+	public int tabCount() { return getTabs().size(); }
+	
+	public void selectLastTab() { getSelectionModel().select(tabCount() - 2); }
+	
+	public FileTab selectedTab() { return (FileTab) getSelectionModel().getSelectedItem(); }
 }

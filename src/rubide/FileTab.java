@@ -28,7 +28,6 @@ public class FileTab extends Tab {
 	}
 	
 	public void save() {
-		TextArea ta = (TextArea) this.getContent();
 		if (heldFile.isNewFile()) {
 			File f = FileTabPane.CHOOSER.showSaveDialog(getTabPane().getScene().getWindow());
 			if (f != null) {
@@ -39,9 +38,10 @@ public class FileTab extends Tab {
 				return;
 		}
 		
-		heldFile.save(ta.getText());
+		heldFile.save(getContentText());
 	}	
 	
-	public boolean isEmpty() { return heldFile.isNewFile() && ((TextArea) getContent()).getText().length() == 0; }
+	public boolean isEmpty() { return heldFile.isNewFile() && getContentText().length() == 0; }
 	public RubideFile getFile() { return heldFile; }
+	public String getContentText() { return ((TextArea) getContent()).getText(); }
 }

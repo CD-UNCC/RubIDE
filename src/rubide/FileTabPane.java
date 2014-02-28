@@ -9,6 +9,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -56,8 +57,9 @@ public class FileTabPane extends TabPane {
 					getTabs().add(new FileTab());
 				if (getTabs().size() > 1) {
 					FileTab firstTab = (FileTab) getTabs().get(0);
-					if (firstTab.getFile().isNewFile())
-						close(firstTab);
+					if (firstTab.getFile().isNewFile()) 
+						if (((TextArea) firstTab.getContent()).getText().length() == 0)
+							close(firstTab);						
 				}
 			}
 		});
@@ -89,9 +91,7 @@ public class FileTabPane extends TabPane {
 		EventHandler<Event> e = t.getOnClosed();
 		if (e != null)
 			e.handle(null);
-		System.out.println(getTabs().size());
 		System.out.println(getTabs().remove(t));
-		System.out.println(getTabs().size());
 	}
 	
 	public void save() {

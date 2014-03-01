@@ -2,29 +2,31 @@ package rubide;
 
 import java.io.File;
 
+import codemirror.CodeEditor;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
 
 public class FileTab extends Tab {
+	final CodeEditor editor;
 	private RubideFile heldFile;
 	
+	public FileTab(RubideFile f) {
+		heldFile = f;
+		
+		setText(f.getFileName());
+		
+		String text = (f.isNewFile() ? "" : f.read());
+		
+		editor = new CodeEditor(text, f.getFileExtension());
+		
+		setContent(editor);
+	}
+	
 	public FileTab(File f) {
-		heldFile = new RubideFile(f);
-		LoadTab(heldFile.getFileName(), heldFile.read());
+		this(new RubideFile(f));
 	}
 	
 	public FileTab() {
-		heldFile = new RubideFile();
-		LoadTab("New file", "");
-	}
-	
-	void LoadTab(String name, String text) {
-		setText(name);
-		
-		TextArea ta = new TextArea();
-		ta.setText(text);
-		
-		setContent(ta);
+		this(new RubideFile());
 	}
 	
 	public void save() {
@@ -38,10 +40,11 @@ public class FileTab extends Tab {
 				return;
 		}
 		
-		heldFile.save(getContentText());
+		heldFile.save(getCode());
+		editor.setCode(heldFile.read(), heldFile.getFileExtension());
 	}	
 	
-	public boolean isEmpty() { return heldFile.isNewFile() && getContentText().length() == 0; }
+	public boolean isEmpty() { return heldFile.isNewFile() && getCode().length() == 0; }
 	public RubideFile getFile() { return heldFile; }
-	public String getContentText() { return ((TextArea) getContent()).getText(); }
+	public String getCode() { return editor.getCodeAndSnapshot(); }
 }

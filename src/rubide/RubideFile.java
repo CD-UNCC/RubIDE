@@ -33,6 +33,8 @@ public class RubideFile {
    }
    
    public RubideFile() {
+	   fileName = "NewFile";
+	   fileExt = "";
 	   newFile = true;
    }
    

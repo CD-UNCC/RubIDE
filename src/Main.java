@@ -12,7 +12,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-    	VBox vLayout = new VBox();    	
+    	VBox vLayout = new VBox();
         HBox hLayout = new HBox();
         
         hLayout.setPrefHeight(380);
@@ -27,7 +27,9 @@ public class Main extends Application {
         
         vLayout.getChildren().addAll(menus, hLayout);
       
-        Scene scene = new Scene(vLayout, 551, 400);       
+        Scene scene = new Scene(vLayout, 551, 400);
+        
+        SceneEvents.KeyPressed(scene, files);
 
         primaryStage.setScene(scene);
         primaryStage.show();

@@ -28,7 +28,7 @@ public class ButtonLayout extends VBox {
         	@Override
             public void handle(ActionEvent e) {
         		files.openFiles();
-            }        	
+            }
         });
 	}
 	

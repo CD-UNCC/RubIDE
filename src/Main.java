@@ -2,6 +2,7 @@ import rubide.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -11,15 +12,22 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        HBox layout = new HBox();             
+    	VBox vLayout = new VBox();    	
+        HBox hLayout = new HBox();
+        
+        hLayout.setPrefHeight(380);
         
         final FileTabPane files = new FileTabPane();
         
         ButtonLayout buttons = new ButtonLayout(files);
         
-        layout.getChildren().addAll(files, buttons);
+        hLayout.getChildren().addAll(files, buttons);
+        
+        MenuLayout menus = new MenuLayout(files);
+        
+        vLayout.getChildren().addAll(menus, hLayout);
       
-        Scene scene = new Scene(layout, 551, 400);       
+        Scene scene = new Scene(vLayout, 551, 400);       
 
         primaryStage.setScene(scene);
         primaryStage.show();

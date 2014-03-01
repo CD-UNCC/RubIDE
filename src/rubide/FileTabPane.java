@@ -10,8 +10,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Side;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.Tooltip;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -22,21 +20,20 @@ public class FileTabPane extends TabPane {
 	public static FileChooser CHOOSER = new FileChooser();
 	
 	private Tab addTab;
-	private boolean addingTab = false;
 	
 	public FileTabPane() {
 		super();
 		
 		setSide(Side.LEFT);
 		
-		getTabs().add(new FileTab());
+		addTab(0, new FileTab());
 		
 		addTab = new Tab();
 		addTab.closableProperty().set(false);
 		addTab.setText("+");
 		// addTab.setTooltip();
 		
-		addTab(addTab);
+		addTab(1, addTab);
 		
 		// Set Events
 		

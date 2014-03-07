@@ -43,7 +43,6 @@ public class FileTab extends Tab {
 		heldFile.save(getCode());
 		editor.setCode(heldFile.read(), heldFile.getFileExtension());
 	}	
-	
 	public boolean isEmpty() { return heldFile.isNewFile() && getCode().length() == 0; }
 	public RubideFile getFile() { return heldFile; }
 	public String getCode() { return editor.getCodeAndSnapshot(); }

@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class RubideFile {
    static String patternStr = "(.*)\\.(.+)";
    static Pattern namePattern = Pattern.compile(patternStr);
-   
+   Runtime rt = Runtime.getRuntime();
    File orig;
    String fileName;
    String fileExt;
@@ -54,7 +54,6 @@ public class RubideFile {
       }
       catch (FileNotFoundException e) { System.out.println("Could not write"); }
    }
-   
    public void save(String txt) { save(txt.split("\\\n")); }
    
    public String getFileName() { return fileName; }

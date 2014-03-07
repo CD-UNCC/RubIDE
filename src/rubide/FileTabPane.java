@@ -32,7 +32,7 @@ public class FileTabPane extends TabPane {
 		addTab.closableProperty().set(false);
 		addTab.setText("+");
 		// addTab.setTooltip();
-		
+		CHOOSER.setInitialDirectory(new File(System.getProperty("user.home")));
 		addTab(1, addTab);
 		
 		// Set Events

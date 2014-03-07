@@ -28,10 +28,13 @@ public class Main extends Application {
         vLayout.getChildren().addAll(menus, hLayout);
       
         Scene scene = new Scene(vLayout, 551, 400);
-        
+
         SceneEvents.KeyPressed(scene, files);
 
         primaryStage.setScene(scene);
+        primaryStage.centerOnScreen();
+        primaryStage.setTitle("RubIDE");
         primaryStage.show();
+        
     }
 }
